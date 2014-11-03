@@ -44,8 +44,11 @@ public class Grid2048 extends JPanel
 	
 	public void showField(int[][] field)
 	{
-		setPositions(field);
-		refreshField();
+		synchronized (this)
+		{
+			setPositions(field);
+			refreshField();
+		}
 	}
 	
 	
@@ -67,51 +70,64 @@ public class Grid2048 extends JPanel
 				{
 					if (positions[i][j] != 0)
 					{
+						int size = 0;
 						switch (positions[i][j])
 						{
 							case 2:
 								g.setColor(new Color(215, 235, 240));
+								size = 80;
 								break;
 							case 4:
 								g.setColor(new Color(173, 216, 230));
+								size = 80;
 								break;
 							case 8:
 								g.setColor(new Color(0, 255, 255));
+								size = 80;
 								break;
 							case 16:
 								g.setColor(new Color(0, 0, 255));
+								size = 50;
 								break;
 							case 32:
 								g.setColor(new Color(0, 0, 192));
+								size = 50;
 								break;
 							case 64:
 								g.setColor(new Color(0, 0, 128));
+								size = 50;
 								break;
 							case 128:
 								g.setColor(new Color(0, 0, 64));
+								size = 40;
 								break;
 							case 256:
 								g.setColor(new Color(255, 255, 0));
+								size = 40;
 								break;
 							case 512:
 								g.setColor(new Color(255, 64, 32));
+								size = 40;
 								break;
 							case 1024:
 								g.setColor(new Color(255, 128, 64));
+								size = 30;
 								break;
 							case 2048:
 								g.setColor(new Color(255, 192, 128));
+								size = 30;
 								break;
 							default:
 								g.setColor(new Color(255, 0, 0));
+								size = 30;
 								break;
 						
 						}
 						g.fillRect(rectSize * i, (rectSize * (positions[0].length - 1)) - rectSize * j, rectSize, rectSize);
 						g.setColor(Color.black);
-						g.setFont(new Font("number", Font.BOLD, 80));
-						g.drawString(positions[i][j] + "", rectSize * i + 20,
-								((rectSize * (positions[0].length - 1)) - rectSize * j) + 80);
+						g.setFont(new Font("number", Font.BOLD, size));
+						g.drawString(positions[i][j] + "", rectSize * i + size / 5,
+								((rectSize * (positions[0].length - 1)) - rectSize * j) + 50 + size / 2);
 					}
 				}
 			}
