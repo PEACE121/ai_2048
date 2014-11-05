@@ -74,51 +74,51 @@ public class Grid2048 extends JPanel
 						switch (positions[i][j])
 						{
 							case 2:
-								g.setColor(new Color(215, 235, 240));
+								g.setColor(new Color(238,228,218));
 								size = 80;
 								break;
 							case 4:
-								g.setColor(new Color(173, 216, 230));
+								g.setColor(new Color(237,224,200));
 								size = 80;
 								break;
 							case 8:
-								g.setColor(new Color(0, 255, 255));
+								g.setColor(new Color(242,177,121));
 								size = 80;
 								break;
 							case 16:
-								g.setColor(new Color(0, 0, 255));
+								g.setColor(new Color(245,150,99));
 								size = 50;
 								break;
 							case 32:
-								g.setColor(new Color(0, 0, 192));
+								g.setColor(new Color(246,124,95));
 								size = 50;
 								break;
 							case 64:
-								g.setColor(new Color(0, 0, 128));
+								g.setColor(new Color(246,94,59));
 								size = 50;
 								break;
 							case 128:
-								g.setColor(new Color(0, 0, 64));
+								g.setColor(new Color(237,207,114));
 								size = 40;
 								break;
 							case 256:
-								g.setColor(new Color(255, 255, 0));
+								g.setColor(new Color(237,204,97));
 								size = 40;
 								break;
 							case 512:
-								g.setColor(new Color(255, 64, 32));
+								g.setColor(new Color(237,200,80));
 								size = 40;
 								break;
 							case 1024:
-								g.setColor(new Color(255, 128, 64));
+								g.setColor(new Color(237,197,63));
 								size = 30;
 								break;
 							case 2048:
-								g.setColor(new Color(255, 192, 128));
+								g.setColor(new Color(237,194,46));
 								size = 30;
 								break;
 							default:
-								g.setColor(new Color(255, 0, 0));
+								g.setColor(new Color(205,192,180));
 								size = 30;
 								break;
 						
