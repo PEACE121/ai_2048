@@ -58,7 +58,7 @@ public class Puzzle2048
 			first = false;
 			
 			// MOVE
-			SearchState bestState = MiniMax.alphabeta(nextState, 7, new SearchState(Float.MIN_VALUE), new SearchState(
+			SearchState bestState = MiniMax.alphabeta(nextState, 5, new SearchState(Float.MIN_VALUE), new SearchState(
 					Float.MAX_VALUE), false);
 			while (bestState.getParent() != null && bestState.getParent().getParent() != null)
 			{
@@ -79,7 +79,21 @@ public class Puzzle2048
 		}
 		
 		long runtime = System.currentTimeMillis() - start;
-		System.out.println("Runtime: " + runtime + " ms");
+		// System.out.println("Runtime: " + runtime + " ms");
+		
+		int max = 0;
+		for (int i = 0; i < field.length; i++)
+		{
+			for (int j = 0; j < field[0].length; j++)
+			{
+				if (nextState.getGrid()[i][j] > max)
+				{
+					max = nextState.getGrid()[i][j];
+				}
+			}
+		}
+		System.out.println(max);
+		
 	}
 	
 	
