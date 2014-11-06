@@ -82,9 +82,9 @@ public class Puzzle2048
 		// System.out.println("Runtime: " + runtime + " ms");
 		
 		int max = 0;
-		for (int i = 0; i < field.length; i++)
+		for (int i = 0; i < nextState.getGrid().length; i++)
 		{
-			for (int j = 0; j < field[0].length; j++)
+			for (int j = 0; j < nextState.getGrid()[0].length; j++)
 			{
 				if (nextState.getGrid()[i][j] > max)
 				{

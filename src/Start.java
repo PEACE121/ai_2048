@@ -18,6 +18,14 @@ public class Start
 					System.out.println("Run " + i);
 					puzzle = new Puzzle2048();
 					puzzle.run();
+					try
+					{
+						Thread.sleep(5000);
+					} catch (InterruptedException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				break;
 			default:
