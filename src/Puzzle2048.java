@@ -7,6 +7,10 @@ public class Puzzle2048
 {
 	private final Grid2048	grid;
 	
+	private final JFrame		frame;
+	
+	private int					max;
+	
 	
 	/**
 	 * 
@@ -17,11 +21,11 @@ public class Puzzle2048
 		
 		grid = new Grid2048();
 		
-		JFrame f = new JFrame();
-		f.getContentPane().add(grid);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(Grid2048.MAX_SIZE, Grid2048.MAX_SIZE);
-		f.setVisible(true);
+		frame = new JFrame();
+		frame.getContentPane().add(grid);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(Grid2048.MAX_SIZE, Grid2048.MAX_SIZE);
+		frame.setVisible(true);
 		
 	}
 	
@@ -60,6 +64,9 @@ public class Puzzle2048
 			// MOVE
 			SearchState bestState = MiniMax.alphabeta(nextState, 5, new SearchState(Float.MIN_VALUE), new SearchState(
 					Float.MAX_VALUE), false);
+			
+			// bestState.calcHeuristic(true);
+			// SearchState bestState = MiniMax.expectiminimax(nextState, 3, false);
 			while (bestState.getParent() != null && bestState.getParent().getParent() != null)
 			{
 				bestState = bestState.getParent();
@@ -81,7 +88,7 @@ public class Puzzle2048
 		long runtime = System.currentTimeMillis() - start;
 		// System.out.println("Runtime: " + runtime + " ms");
 		
-		int max = 0;
+		max = 0;
 		for (int i = 0; i < nextState.getGrid().length; i++)
 		{
 			for (int j = 0; j < nextState.getGrid()[0].length; j++)
@@ -92,8 +99,7 @@ public class Puzzle2048
 				}
 			}
 		}
-		System.out.println(max);
-		
+		// System.out.println(max);
 	}
 	
 	
@@ -297,4 +303,27 @@ public class Puzzle2048
 		return out;
 	}
 	
+	
+	/**
+	 * @return the grid
+	 */
+	public Grid2048 getGrid()
+	{
+		return grid;
+	}
+	
+	
+	/**
+	 * @return the frame
+	 */
+	public JFrame getFrame()
+	{
+		return frame;
+	}
+	
+	
+	public int getMax()
+	{
+		return max;
+	}
 }

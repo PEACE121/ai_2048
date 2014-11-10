@@ -40,13 +40,13 @@ public class MiniMax
 					int[][] newChild2 = Helper.deepCopyIntMatrix(field);
 					newChild2[i][j] = 2;
 					SearchState state2 = new SearchState(newChild2, node);
-					// state2.setH(state2.getH() * 0.9f);
+					state2.setH(state2.getH() * 0.9f);
 					children.add(state2);
 					
 					int[][] newChild4 = Helper.deepCopyIntMatrix(field);
 					newChild4[i][j] = 4;
 					SearchState state4 = new SearchState(newChild4, node);
-					// state4.setH(state4.getH() * 0.1f);
+					state4.setH(state4.getH() * 0.1f);
 					children.add(state4);
 				}
 			}
@@ -135,8 +135,7 @@ public class MiniMax
 	}
 	
 	
-	public static SearchState expectiminimax(SearchState node, int depth, SearchState alpha, SearchState beta,
-			boolean maximizingPlayer)
+	public static SearchState expectiminimax(SearchState node, int depth, boolean maximizingPlayer)
 	{
 		if (depth == 0 || Puzzle2048.isNoMovePossible(node.getGrid()))
 		{
@@ -145,43 +144,32 @@ public class MiniMax
 		if (maximizingPlayer)
 		{
 			List<SearchState> children = generateChildrenMaxWeighted(node);
-			int a = 0;
+			float a = 0;
 			for (SearchState child : children)
 			{
-				SearchState best = expectiminimax(child, depth - 1, alpha, beta, false);
-				a += (1 / (children.size())) * best.getH(); // (1 / (children.size() / 2)) * best.getH();
-				// if (v.getH() > alpha.getH())
-				// {
-				// alpha = v;
-				// }
-				// if (beta.getH() <= alpha.getH())
-				// {
-				// break;
-				// }
+				SearchState best = expectiminimax(child, depth - 1, false);
+				a += (1 / ((float) children.size() / 2)) * best.getH(); // (1 / (children.size() / 2)) * best.getH();
 			}
 			node.setH(a);
 			return node;
 		} else
 		{
 			List<SearchState> children = generateChildrenMin(node);
+			SearchState best = new SearchState(Float.MAX_VALUE);
 			for (SearchState child : children)
 			{
-				SearchState v = expectiminimax(child, depth - 1, alpha, beta, true);
-				if (v.getH() < beta.getH())
+				SearchState v = expectiminimax(child, depth - 1, true);
+				if (v.getH() < best.getH())
 				{
-					beta = v;
+					best = v;
 				}
-				// if (beta.getH() <= alpha.getH())
-				// {
-				// break;
-				// }
 			}
 			if (children.size() == 0)
 			{
 				return node;
 			} else
 			{
-				return beta;
+				return best;
 			}
 		}
 	}
