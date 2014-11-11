@@ -25,7 +25,7 @@ public class Puzzle2048
 		frame.getContentPane().add(grid);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(Grid2048.MAX_SIZE, Grid2048.MAX_SIZE);
-		frame.setVisible(true);
+		// frame.setVisible(true);
 		
 	}
 	

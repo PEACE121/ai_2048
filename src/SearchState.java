@@ -12,7 +12,7 @@ public class SearchState
 	
 	private float							h;
 	
-	public static float[]				weights	= { 2f, 0.7f, 1f, 1f, 1f, 1f };
+	public static float[]				weights	= { 2.0f, 0.7f, 1f, 1f, 1f, 1f };
 	
 	
 	/**
@@ -68,7 +68,7 @@ public class SearchState
 					+ leftColumn + " / " + lostSituation);
 		}
 		return (weights[0] * optimalField) + (weights[1] * multiple) + (weights[2] * emptyField)
-				+ (weights[3] * heighestInEdge) + (weights[4] * leftColumn + (weights[5] * lostSituation));
+				+ (weights[3] * heighestInEdge) + (weights[4] * leftColumn) + (weights[5] * lostSituation);
 	}
 	
 	
@@ -106,7 +106,7 @@ public class SearchState
 				return 0;
 			}
 		}
-		return 100;
+		return 10;
 	}
 	
 	
