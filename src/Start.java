@@ -1,4 +1,3 @@
-import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -17,88 +16,103 @@ public class Start
 	 */
 	public static void main(String[] args)
 	{
-		
-		
 		int runsAmount = 1;
+		boolean turnOnUI = true;
+		int delay = 0;
 		switch (args.length)
 		{
+			case 4:
+				turnOnUI = Boolean.parseBoolean(args[3]);
+			case 3:
+				delay = Integer.parseInt(args[2]);
 			case 2:
-				SearchState.weights[0] = 1.7f;
-				SearchState.weights[1] = 0.5f;
-				SearchState.weights[2] = 2.5f;
-				SearchState.weights[3] = 0f;
-				SearchState.weights[4] = 0f;
-				SearchState.weights[5] = 3.0f;
-				run(Integer.parseInt(args[0]));
-				break;
+				runsAmount = Integer.parseInt(args[1]);
 			case 1:
-				runsAmount = Integer.parseInt(args[0]);
-			case 0:
-				Writer fw = null;
-				try
+				switch (ERuntype.valueOf(args[0]))
 				{
-					TEXT_FILE = "output" + System.currentTimeMillis() + ".txt";
-					fw = new FileWriter(TEXT_FILE, true);
-					fw.append("Optimal Field,Multiple,Empty Fields,Heighest in the Edge,Left Column,Lost Situation,32,64,128,256,512,1024,2048,4096,8192"
-							+ System.getProperty("line.separator"));
-					fw.close();
-				} catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-				
-				// optimal field
-				for (float i = 1.6f; i <= 1.91f; i = i + 0.1f)
-				{
-					SearchState.weights[0] = i;
-					
-					// multiple
-					for (float j = 0.4f; j <= 0.71f; j = j + 0.1f)
-					{
-						SearchState.weights[1] = j;
-						
-						// empty fields
-						for (float j2 = 1.5f; j2 <= 3.01f; j2 = j2 + 0.5f)
+					case EVALUATION:
+						Writer fw = null;
+						try
 						{
-							SearchState.weights[2] = j2;
+							TEXT_FILE = "output" + System.currentTimeMillis() + ".txt";
+							fw = new FileWriter(TEXT_FILE, true);
+							fw.append("Optimal Field,Multiple,Empty Fields,Heighest in the Edge,Left Column,Lost Situation,32,64,128,256,512,1024,2048,4096,8192"
+									+ System.getProperty("line.separator"));
+							fw.close();
+						} catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+						
+						// optimal field
+						for (float i = 1.6f; i <= 1.91f; i = i + 0.1f)
+						{
+							SearchState.weights[0] = i;
 							
-							// heighest in the edge
-							for (float k = 0; k <= 0; k = k + 1)
+							// multiple
+							for (float j = 0.4f; j <= 0.71f; j = j + 0.1f)
 							{
-								SearchState.weights[3] = k;
+								SearchState.weights[1] = j;
 								
-								// left column
-								for (float k2 = 0; k2 <= 0; k2 = k2 + 1)
+								// empty fields
+								for (float j2 = 1.5f; j2 <= 3.01f; j2 = j2 + 0.5f)
 								{
-									SearchState.weights[4] = k2;
+									SearchState.weights[2] = j2;
 									
-									for (float l = 1; l <= 3.01f; l = l + 0.5f)
+									// heighest in the edge
+									for (float k = 0; k <= 0; k = k + 1)
 									{
-										SearchState.weights[5] = l;
-										run(Integer.parseInt(args[0]));
+										SearchState.weights[3] = k;
+										
+										// left column
+										for (float k2 = 0; k2 <= 0; k2 = k2 + 1)
+										{
+											SearchState.weights[4] = k2;
+											
+											for (float l = 1; l <= 3.01f; l = l + 0.5f)
+											{
+												SearchState.weights[5] = l;
+												run(runsAmount, turnOnUI, delay);
+											}
+										}
 									}
 								}
 							}
 						}
-					}
+						break;
+					case PLAY:
+						Puzzle2048 puzzle = new Puzzle2048(turnOnUI, delay);
+						puzzle.playManually();
+						break;
+					case RUN:
+						SearchState.weights[0] = 1.7f;
+						SearchState.weights[1] = 0.5f;
+						SearchState.weights[2] = 2.5f;
+						SearchState.weights[3] = 5f;
+						SearchState.weights[4] = 0f;
+						SearchState.weights[5] = 3.0f;
+						run(runsAmount, turnOnUI, delay);
+						break;
 				}
+			case 0:
 				break;
 			default:
-				System.out.println("Usage: Start <amount>");
+				System.out.println("Usage: Start <type> <amount> <delay> <turnOnUI>\n" + "type: RUN, PLAY or EVALUATION\n"
+						+ "amount: amount of rounds (default: 1)\n" + "delay: ms between the actions (default: 0)"
+						+ "turnOnUI: false if the UI should not be shown (default:true)");
 				break;
 		}
 	}
 	
 	
-	private static void run(int runsAmount)
+	private static void run(int runsAmount, boolean turnOnUI, int delay)
 	{
 		Map<Integer, Integer> amounts = new HashMap<Integer, Integer>();
 		for (int i = 0; i < runsAmount; i++)
 		{
 			// System.out.println("Run " + i);
-			Puzzle2048 puzzle = new Puzzle2048();
-			puzzle.run();
-			puzzle.getGrid().dispatchEvent(new WindowEvent(puzzle.getFrame(), WindowEvent.WINDOW_CLOSING));
+			Puzzle2048 puzzle = new Puzzle2048(turnOnUI, delay);
+			puzzle.playArtificially();
 			int max = puzzle.getMax();
 			if (!amounts.containsKey(max))
 			{

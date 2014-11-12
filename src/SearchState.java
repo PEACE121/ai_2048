@@ -59,7 +59,7 @@ public class SearchState
 		float multiple = heuristicPenalizeMultiple();
 		// System.out.println(multiple + " / " + emptyField);
 		float optimalField = heuristicOptimalField();
-		float heighestInEdge = heuristicHeighestInEdge();
+		float heighestInEdge = heuristicHeighestInLeftDownEdge();
 		float leftColumn = heuristicCompleteLeftColum();
 		float lostSituation = heuristicLostSituation();
 		if (output)
@@ -102,6 +102,20 @@ public class SearchState
 		for (int i = 0; i < sorted.size() && sorted.get(0).getValue() == sorted.get(i).getValue(); i++)
 		{
 			if (isInEdge(sorted.get(i)))
+			{
+				return 0;
+			}
+		}
+		return 10;
+	}
+	
+	
+	private float heuristicHeighestInLeftDownEdge()
+	{
+		List<GridCell> sorted = Helper.gridToSortedList(grid);
+		for (int i = 0; i < sorted.size() && sorted.get(0).getValue() == sorted.get(i).getValue(); i++)
+		{
+			if ((sorted.get(i).getX() == 0) && (sorted.get(i).getY() == 0))
 			{
 				return 0;
 			}
@@ -231,7 +245,7 @@ public class SearchState
 	}
 	
 	
-	private float heuristicEmptyFields()
+	public float heuristicEmptyFields()
 	{
 		int emptyFields = 0;
 		for (int i = 0; i < grid.length; i++)

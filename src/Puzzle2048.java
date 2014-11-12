@@ -11,13 +11,16 @@ public class Puzzle2048
 	
 	private int					max;
 	
+	private final int			delay;
+	
 	
 	/**
 	 * 
 	 */
-	public Puzzle2048()
+	public Puzzle2048(boolean turnOnUI, int delay)
 	{
 		super();
+		this.delay = delay;
 		
 		grid = new Grid2048();
 		
@@ -25,12 +28,15 @@ public class Puzzle2048
 		frame.getContentPane().add(grid);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(Grid2048.MAX_SIZE, Grid2048.MAX_SIZE);
-		// frame.setVisible(true);
+		if (turnOnUI)
+		{
+			frame.setVisible(true);
+		}
 		
 	}
 	
 	
-	public void run()
+	public void playArtificially()
 	{
 		
 		long start = System.currentTimeMillis();
@@ -44,14 +50,17 @@ public class Puzzle2048
 		while (nextState.getGrid() != null && !isNoMovePossible(nextState.getGrid()))
 		{
 			grid.showField(nextState.getGrid());
-			// try
-			// {
-			// Thread.sleep(500);
-			// } catch (InterruptedException e)
-			// {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
+			if (delay > 0)
+			{
+				try
+				{
+					Thread.sleep(delay);
+				} catch (InterruptedException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
 			if (!first)
 			{
@@ -62,11 +71,12 @@ public class Puzzle2048
 			first = false;
 			
 			// MOVE
-			SearchState bestState = MiniMax.alphabeta(nextState, 5, new SearchState(Float.MIN_VALUE), new SearchState(
+			int depth = Math.max(5, (int) Math.ceil(nextState.heuristicEmptyFields() / 2));
+			SearchState bestState = MiniMax.alphabeta(nextState, depth, new SearchState(Float.MIN_VALUE), new SearchState(
 					Float.MAX_VALUE), false);
 			
 			// bestState.calcHeuristic(true);
-			// SearchState bestState = MiniMax.expectiminimax(nextState, 3, false);
+			// SearchState bestState = MiniMax.expectiminimax(nextState, 5, false);
 			while (bestState.getParent() != null && bestState.getParent().getParent() != null)
 			{
 				bestState = bestState.getParent();
@@ -103,10 +113,10 @@ public class Puzzle2048
 	}
 	
 	
-	private void playManually()
+	public void playManually()
 	{
 		int[][] field = grid.getPositions();
-		spawnRandom(field);
+		field = spawnRandom(field);
 		grid.showField(field);
 		while (true)
 		{
@@ -137,8 +147,8 @@ public class Puzzle2048
 			
 			if (isShiftPossible(field, dir))
 			{
-				shift(field, dir);
-				spawnRandom(field);
+				field = shift(field, dir);
+				field = spawnRandom(field);
 			} else
 			{
 				System.out.println("Shift is not possible in direction " + dir.name());
