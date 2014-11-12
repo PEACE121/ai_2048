@@ -22,6 +22,15 @@ public class Start
 		int runsAmount = 1;
 		switch (args.length)
 		{
+			case 2:
+				SearchState.weights[0] = 1.7f;
+				SearchState.weights[1] = 0.5f;
+				SearchState.weights[2] = 2.5f;
+				SearchState.weights[3] = 0f;
+				SearchState.weights[4] = 0f;
+				SearchState.weights[5] = 3.0f;
+				run(Integer.parseInt(args[0]));
+				break;
 			case 1:
 				runsAmount = Integer.parseInt(args[0]);
 			case 0:
@@ -39,31 +48,31 @@ public class Start
 				}
 				
 				// optimal field
-				for (float i = 1.7f; i <= 2.3f; i = i + 0.2f)
+				for (float i = 1.6f; i <= 1.91f; i = i + 0.1f)
 				{
 					SearchState.weights[0] = i;
 					
 					// multiple
-					for (float j = 0.5f; j <= 0.9f; j = j + 0.2f)
+					for (float j = 0.4f; j <= 0.71f; j = j + 0.1f)
 					{
 						SearchState.weights[1] = j;
 						
 						// empty fields
-						for (float j2 = 0; j2 <= 2f; j2 = j2 + 1f)
+						for (float j2 = 1.5f; j2 <= 3.01f; j2 = j2 + 0.5f)
 						{
 							SearchState.weights[2] = j2;
 							
 							// heighest in the edge
-							for (float k = 0; k <= 2; k = k + 1)
+							for (float k = 0; k <= 0; k = k + 1)
 							{
 								SearchState.weights[3] = k;
 								
 								// left column
-								for (float k2 = 0; k2 <= 2; k2 = k2 + 1)
+								for (float k2 = 0; k2 <= 0; k2 = k2 + 1)
 								{
 									SearchState.weights[4] = k2;
 									
-									for (float l = 0; l <= 2; l = l + 1)
+									for (float l = 1; l <= 3.01f; l = l + 0.5f)
 									{
 										SearchState.weights[5] = l;
 										run(Integer.parseInt(args[0]));
@@ -109,6 +118,7 @@ public class Start
 				if (amounts.containsKey(number))
 				{
 					line += amounts.get(number) + ",";
+					System.out.println(number + ": " + amounts.get(number));
 				} else
 				{
 					line += "0,";
