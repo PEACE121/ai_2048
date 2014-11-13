@@ -15,11 +15,16 @@ public class MiniMax
 				if (field[i][j] == 0)
 				{
 					int[][] newChild = Helper.deepCopyIntMatrix(field);
+					// if (Math.random() < 0.9)
+					// {
 					newChild[i][j] = 2;
 					children.add(new SearchState(newChild, node));
+					// } else
+					// {
 					newChild = Helper.deepCopyIntMatrix(field);
 					newChild[i][j] = 4;
 					children.add(new SearchState(newChild, node));
+					// }
 				}
 			}
 		}

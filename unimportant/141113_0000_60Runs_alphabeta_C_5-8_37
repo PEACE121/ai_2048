@@ -1,0 +1,78 @@
+Run 0: 512 (0%), Time: 5537 ms
+Run 1: 256 (0%), Time: 1911 ms
+Run 2: 2048 (33%), Time: 10515 ms
+Run 3: 2048 (50%), Time: 11506 ms
+Run 4: 1024 (40%), Time: 5697 ms
+Run 5: 2048 (50%), Time: 11892 ms
+Run 6: 1024 (43%), Time: 7236 ms
+Run 7: 512 (38%), Time: 5675 ms
+Run 8: 1024 (33%), Time: 7391 ms
+Run 9: 2048 (40%), Time: 9352 ms
+Run 10: 512 (36%), Time: 4081 ms
+Run 11: 1024 (33%), Time: 6624 ms
+Run 12: 2048 (38%), Time: 11406 ms
+Run 13: 4096 (43%), Time: 19799 ms
+Run 14: 1024 (40%), Time: 5155 ms
+Run 15: 512 (38%), Time: 3508 ms
+Run 16: 1024 (35%), Time: 6954 ms
+Run 17: 512 (33%), Time: 3222 ms
+Run 18: 1024 (32%), Time: 7347 ms
+Run 19: 512 (30%), Time: 2896 ms
+Run 20: 2048 (33%), Time: 11877 ms
+Run 21: 512 (32%), Time: 3355 ms
+Run 22: 512 (30%), Time: 3980 ms
+Run 23: 2048 (33%), Time: 10566 ms
+Run 24: 2048 (36%), Time: 12405 ms
+Run 25: 2048 (38%), Time: 10046 ms
+Run 26: 1024 (37%), Time: 4809 ms
+Run 27: 2048 (39%), Time: 9513 ms
+Run 28: 1024 (38%), Time: 7275 ms
+Run 29: 1024 (37%), Time: 4664 ms
+Run 30: 512 (35%), Time: 3096 ms
+Run 31: 2048 (38%), Time: 11106 ms
+Run 32: 1024 (36%), Time: 5835 ms
+Run 33: 512 (35%), Time: 3374 ms
+Run 34: 1024 (34%), Time: 5786 ms
+Run 35: 2048 (36%), Time: 13833 ms
+Run 36: 4096 (38%), Time: 18098 ms
+Run 37: 1024 (37%), Time: 4766 ms
+Run 38: 1024 (36%), Time: 6475 ms
+Run 39: 512 (35%), Time: 3230 ms
+Run 40: 2048 (37%), Time: 13206 ms
+Run 41: 2048 (38%), Time: 9065 ms
+Run 42: 512 (37%), Time: 3976 ms
+Run 43: 2048 (39%), Time: 11245 ms
+Run 44: 1024 (38%), Time: 7545 ms
+Run 45: 2048 (39%), Time: 12775 ms
+Run 46: 1024 (38%), Time: 4694 ms
+Run 47: 2048 (40%), Time: 10252 ms
+Run 48: 2048 (41%), Time: 10489 ms
+Run 49: 1024 (40%), Time: 5133 ms
+Run 50: 2048 (41%), Time: 11901 ms
+Run 51: 1024 (40%), Time: 6796 ms
+Run 52: 1024 (40%), Time: 5234 ms
+Run 53: 1024 (39%), Time: 4563 ms
+Run 54: 1024 (38%), Time: 4113 ms
+Run 55: 1024 (38%), Time: 5729 ms
+Run 56: 1024 (37%), Time: 3815 ms
+Run 57: 1024 (36%), Time: 7624 ms
+Run 58: 2048 (37%), Time: 11070 ms
+Run 59: 1024 (37%), Time: 5694 ms
+256: 1
+512: 12
+1024: 25
+2048: 20
+4096: 2
+
+SearchState.weights[0] = 1.7f;
+SearchState.weights[1] = 0.5f;
+SearchState.weights[2] = 2.5f;
+SearchState.weights[3] = 5f;
+SearchState.weights[4] = 0f;
+SearchState.weights[5] = 3.0f;
+
+Alphabeta
+
+depth 5-8
+
+C 
