@@ -36,7 +36,7 @@ public class Puzzle2048
 	}
 	
 	
-	public void playArtificially()
+	public void playArtificially(EAlgorithm algorithm)
 	{
 		
 		long start = System.currentTimeMillis();
@@ -71,12 +71,20 @@ public class Puzzle2048
 			first = false;
 			
 			// MOVE
-			int depth = 5;// Math.max(5, (int) Math.ceil(nextState.heuristicEmptyFields() / 2));
-			SearchState bestState = MiniMax.alphabeta(nextState, depth, new SearchState(Float.MIN_VALUE), new SearchState(
-					Float.MAX_VALUE), false);
+			int depth = Math.max(5, (int) Math.ceil(nextState.heuristicEmptyFields() / 2));
+			SearchState bestState = null;
+			switch (algorithm)
+			{
+				case ALPHABETA:
+					bestState = MiniMax.alphabeta(nextState, depth, new SearchState(Float.MIN_VALUE), new SearchState(
+							Float.MAX_VALUE), false);
+					break;
+				case EXPECTI:
+					bestState = MiniMax.expectiminimax(nextState, depth, false);
+			}
+			
 			
 			// bestState.calcHeuristic(true);
-			// SearchState bestState = MiniMax.expectiminimax(nextState, depth, false);
 			while (bestState.getParent() != null && bestState.getParent().getParent() != null)
 			{
 				bestState = bestState.getParent();

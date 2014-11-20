@@ -19,8 +19,13 @@ public class Start
 		int runsAmount = 1;
 		boolean turnOnUI = true;
 		int delay = 0;
+		EAlgorithm algorithm = EAlgorithm.ALPHABETA;
 		switch (args.length)
 		{
+			case 6:
+				algorithm = EAlgorithm.valueOf(args[5]);
+			case 5:
+				MiniMax.doubleC = Boolean.parseBoolean(args[4]);
 			case 4:
 				turnOnUI = Boolean.parseBoolean(args[3]);
 			case 3:
@@ -45,22 +50,22 @@ public class Start
 						}
 						
 						// optimal field
-						for (float i = 0.0f; i <= 2.01f; i = i + 1.0f)
+						for (float i = 1.0f; i <= 2.01f; i = i + 0.5f)
 						{
 							SearchState.weights[0] = i;
 							
 							// multiple
-							for (float j = 0.0f; j <= 2.01f; j = j + 1.0f)
+							for (float j = 0; j <= 1f; j = j + 0.5f)
 							{
 								SearchState.weights[1] = j;
 								
 								// empty fields
-								for (float j2 = 0.0f; j2 <= 2.01f; j2 = j2 + 1.0f)
+								for (float j2 = 1.0f; j2 <= 3.01f; j2 = j2 + 0.5f)
 								{
 									SearchState.weights[2] = j2;
 									
 									// heighest in the edge
-									for (float k = 0f; k <= 2.0f; k = k + 1.0f)
+									for (float k = 0f; k <= 0.0f; k = k + 1.0f)
 									{
 										SearchState.weights[3] = k;
 										
@@ -70,10 +75,11 @@ public class Start
 											SearchState.weights[4] = k2;
 											
 											// lost situation
-											for (float l = 0; l <= 2.01f; l = l + 1.0f)
+											for (float l = 1; l <= 3.01f; l = l + 0.5f)
 											{
 												SearchState.weights[5] = l;
-												run(runsAmount, turnOnUI, delay);
+												System.out.println(i + "," + j + "," + j2 + "," + k + "," + k2 + "," + l);
+												run(runsAmount, turnOnUI, delay, algorithm);
 											}
 										}
 									}
@@ -86,27 +92,45 @@ public class Start
 						puzzle.playManually();
 						break;
 					case RUN:
-						SearchState.weights[0] = 1.7f;
-						SearchState.weights[1] = 0.5f;
-						SearchState.weights[2] = 2.5f;
-						SearchState.weights[3] = 5f;
-						SearchState.weights[4] = 0f;
-						SearchState.weights[5] = 3.0f;
-						run(runsAmount, turnOnUI, delay);
+						switch (algorithm)
+						{
+							case ALPHABETA:
+								SearchState.weights[0] = 1.7f;
+								SearchState.weights[1] = 0.5f;
+								SearchState.weights[2] = 2.5f;
+								SearchState.weights[3] = 5f;
+								SearchState.weights[4] = 0f;
+								SearchState.weights[5] = 3.0f;
+								break;
+							case EXPECTI:
+								SearchState.weights[0] = 2.0f;
+								SearchState.weights[1] = 0.5f;
+								SearchState.weights[2] = 1.5f;
+								SearchState.weights[3] = 0f;
+								SearchState.weights[4] = 0f;
+								SearchState.weights[5] = 3.0f;
+								break;
+						}
+						
+						run(runsAmount, turnOnUI, delay, algorithm);
 						break;
 				}
 			case 0:
-				break;
 			default:
-				System.out.println("Usage: Start <type> <amount> <delay> <turnOnUI>\n" + "type: RUN, PLAY or EVALUATION\n"
-						+ "amount: amount of rounds (default: 1)\n" + "delay: ms between the actions (default: 0)"
-						+ "turnOnUI: false if the UI should not be shown (default:true)");
+				System.out
+						.println("Usage: Start <type> <amount> <delay> <turnOnUI> <doubleC> <algorithm>\n"
+								+ "type: RUN, PLAY or EVALUATION\n"
+								+ "amount: amount of rounds (default: 1)\n"
+								+ "delay: ms between the actions (default: 0)\n"
+								+ "turnOnUI: false if the UI should not be shown (default:true)\n"
+								+ "doubleC: false if the faster versions with less children in the max node should be used (default:true)\n"
+								+ "algorithm: EXPECTI or ALPHABETA (default: ALPHABETA");
 				break;
 		}
 	}
 	
 	
-	private static void run(int runsAmount, boolean turnOnUI, int delay)
+	private static void run(int runsAmount, boolean turnOnUI, int delay, EAlgorithm algorithm)
 	{
 		Map<Integer, Integer> amounts = new HashMap<Integer, Integer>();
 		amounts.put(2048, 0);
@@ -115,7 +139,7 @@ public class Start
 		{
 			long time = System.nanoTime();
 			Puzzle2048 puzzle = new Puzzle2048(turnOnUI, delay);
-			puzzle.playArtificially();
+			puzzle.playArtificially(algorithm);
 			int max = puzzle.getMax();
 			if (!amounts.containsKey(max))
 			{

@@ -4,6 +4,10 @@ import java.util.List;
 
 public class MiniMax
 {
+	
+	public static boolean	doubleC	= true;
+	
+	
 	private static List<SearchState> generateChildrenMax(SearchState node)
 	{
 		List<SearchState> children = new ArrayList<SearchState>();
@@ -14,17 +18,27 @@ public class MiniMax
 			{
 				if (field[i][j] == 0)
 				{
-					int[][] newChild = Helper.deepCopyIntMatrix(field);
-					// if (Math.random() < 0.9)
-					// {
-					newChild[i][j] = 2;
-					children.add(new SearchState(newChild, node));
-					// } else
-					// {
-					newChild = Helper.deepCopyIntMatrix(field);
-					newChild[i][j] = 4;
-					children.add(new SearchState(newChild, node));
-					// }
+					if (doubleC)
+					{
+						int[][] newChild = Helper.deepCopyIntMatrix(field);
+						newChild[i][j] = 2;
+						children.add(new SearchState(newChild, node));
+						newChild = Helper.deepCopyIntMatrix(field);
+						newChild[i][j] = 4;
+						children.add(new SearchState(newChild, node));
+					} else
+					{
+						int[][] newChild = Helper.deepCopyIntMatrix(field);
+						if (Math.random() < 0.9)
+						{
+							newChild[i][j] = 2;
+							children.add(new SearchState(newChild, node));
+						} else
+						{
+							newChild[i][j] = 4;
+							children.add(new SearchState(newChild, node));
+						}
+					}
 				}
 			}
 		}
@@ -42,20 +56,35 @@ public class MiniMax
 			{
 				if (field[i][j] == 0)
 				{
-					if (Math.random() < 0.9)
+					if (doubleC)
 					{
 						int[][] newChild2 = Helper.deepCopyIntMatrix(field);
 						newChild2[i][j] = 2;
 						SearchState state2 = new SearchState(newChild2, node);
 						state2.setH(state2.getH() * 0.9f);
 						children.add(state2);
-					} else
-					{
 						int[][] newChild4 = Helper.deepCopyIntMatrix(field);
 						newChild4[i][j] = 4;
 						SearchState state4 = new SearchState(newChild4, node);
 						state4.setH(state4.getH() * 0.1f);
 						children.add(state4);
+					} else
+					{
+						if (Math.random() < 0.9)
+						{
+							int[][] newChild2 = Helper.deepCopyIntMatrix(field);
+							newChild2[i][j] = 2;
+							SearchState state2 = new SearchState(newChild2, node);
+							state2.setH(state2.getH());
+							children.add(state2);
+						} else
+						{
+							int[][] newChild4 = Helper.deepCopyIntMatrix(field);
+							newChild4[i][j] = 4;
+							SearchState state4 = new SearchState(newChild4, node);
+							state4.setH(state4.getH());
+							children.add(state4);
+						}
 					}
 				}
 			}
